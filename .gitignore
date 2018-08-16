@@ -1,0 +1,24 @@
+# idea
+.idea/
+*.iml
+
+# maven
+target/
+
+# gradle
+.gradle/
+
+# java
+*.class
+
+# log file
+*.log
+logs/
+
+# other
+bin/
+build/
+.settings/
+/.project
+/.classpath
+.checkstyle
