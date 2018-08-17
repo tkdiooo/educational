@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/layout :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header th:replace="common/layout :: header"></header>
+    <aside th:replace="common/layout :: sidebar"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper"></div>
+    <!-- /.content-wrapper -->
+    <footer th:replace="common/layout :: footer"></footer>
+    <!-- 右侧浮动栏 - 背景 -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<div th:include="common/layout :: script"></div>
+<script th:inline="javascript">
+    // active menu-open
+    function menuChange(code) {
+        $('.sidebar-menu').find('.treeview').find('.treeview-menu').find('li').removeClass('active');
+        $('#' + code).parent().addClass('active');
+    }
+    function autoHeight() {
+        $('iframe[name="myFrame"]')[0].height = win.height - 106;
+    }
+    $(function () {
+        autoHeight();
+    });
+    window.onresize = function () {
+        autoHeight();
+    };
+</script>
+</body>
+</html>

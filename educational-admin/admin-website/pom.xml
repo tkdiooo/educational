@@ -10,6 +10,134 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>admin-website</artifactId>
+    <packaging>jar</packaging>
 
+    <dependencies>
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-cloud-net</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- support-bootstrap support -->
+        <dependency>
+            <groupId>com.qi.support</groupId>
+            <artifactId>support-bootstrap</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!-- jquery -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars/jquery-i18n-properties -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery-i18n-properties</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+        <!-- jquery-ui -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery-ui</artifactId>
+            <version>1.12.1</version>
+        </dependency>
+        <!-- jquery.cookie -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery.cookie</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        <!-- bootstrap -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.7</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- bootstrapValidator -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootstrapValidator</artifactId>
+            <version>0.5.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>bootstrap</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- echarts -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>echarts</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+        <!-- datatables.net -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datatables.net</artifactId>
+            <version>1.10.16</version>
+        </dependency>
+        <!-- datatables.net-bs -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datatables.net-bs</artifactId>
+            <version>1.10.16</version>
+        </dependency>
+        <!-- datatables.net-buttons -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datatables.net-buttons</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zts.educational.admin</groupId>
+            <artifactId>admin-interface</artifactId>
+            <version>${admin.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>Admin-Website</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.zts.educational.admin.Runner</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>
+                                repackage
+                            </goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

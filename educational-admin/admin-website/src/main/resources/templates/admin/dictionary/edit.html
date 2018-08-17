@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<section class="content-header">
+    <h1>
+        字典信息
+        <small th:text="${operation}"></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Forms</a></li>
+        <li class="active">General Elements</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- left column -->
+    <div class="col-md-9 left-column">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">基础信息</h3>
+            </div>
+            <!-- form start -->
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <div class="form-group col-xs-6 form-alone">
+                        <label for="number" class="col-sm-4 control-label">字典编号</label>
+                        <div class="col-xs-7 input-group">
+                            <div class="input-group-btn" style="vertical-align: top !important;" th:value="${parent_number}">
+                                <button type="button" class="btn btn-info" th:if="${null != parent_number}" th:text="${parent_number}"></button>
+                            </div>
+                            <input type="text" class="form-control" id="number" name="number" placeholder="请输入字典编号" th:value="${model} ? ${model.number}">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="content" class="col-sm-4 control-label">字典内容</label>
+                        <div class="col-xs-7 input-group">
+                            <input type="text" class="form-control" id="content" name="content" placeholder="请输入字典内容" th:value="${model} ? ${model.content}">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="content" class="col-sm-4 control-label">字典内容（英文）</label>
+                        <div class="col-xs-7 input-group">
+                            <input type="text" class="form-control" id="english" name="english" placeholder="请输入字典内容（英文）" th:value="${model} ? ${model.english}">
+                        </div>
+                    </div>
+                    <div class="form-group" style="height: 225px !important;">
+                        <label for="description" class="col-sm-2 control-label">字典描述</label>
+                        <div class="col-xs-7 input-group">
+                            <textarea class="form-control" id="description" name="description" rows="4" placeholder="请输入字典描述" th:value="${model} ? ${model.description}"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="parent" th:value="${parent} ?: '0000000000000000000000'"/>
+                <input type="hidden" name="id" th:value="${model} ? ${model.id}"/>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()" data-original-title="提交表单">提交</button>
+                    <button type="button" class="btn btn-default pull-right" onclick="goBack()" data-original-title="取消返回">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3 right-column"></div>
+</section>
+<script th:inline="javascript">
+    $(function () {
+        //显示tooltip
+        $("[data-original-title]").tooltip();
+        load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('[name="parent"]').val()});
+        $('.form-horizontal').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                number: {
+                    validators: {
+                        notEmpty: {
+                            message: '字典编号不能为空'
+                        },
+                        stringLength: {
+                            min: 4,
+                            max: 4,
+                            message: '字典编号长度必须是4位'
+                        },
+                        threshold: 5,
+                        remote: {
+                            url: /*[[@{/exist}]]*/ "",
+                            message: '字典编号已存在',//提示消息
+                            delay: 1000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                            data: function (validator) {
+                                return {
+                                    id: $('[name="id"]').val(),
+                                    parent: $('[name="parent"]').val(),
+                                    number: $('[name="number"]').val()
+                                };
+                            },
+                            type: 'POST'// 请求方式
+                        },
+                        regexp: {//匹配规则
+                            regexp: /^[0-9]+$/,
+                            message: '字典编号只能输入数字'
+                        }
+                    }
+                },
+                content: {
+                    validators: {
+                        notEmpty: {
+                            message: '字典内容不能为空'
+                        },
+                        stringLength: {
+                            max: 20,
+                            message: '字典内容长度不能超过20位'
+                        }
+                    }
+                },
+                english: {
+                    validators: {
+                        stringLength: {
+                            max: 80,
+                            message: '字典内容（英文）长度不能超过80位'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: '字典内容（英文）只能包含大写、小写、数字和下划线'
+                        }
+                    }
+                }
+            }
+        });
+    });
+    var editSubmit = function () {
+        var form = $(".form-horizontal");
+        var formValid = form.data('bootstrapValidator');
+        formValid.validate();
+        if (formValid.isValid()) {
+            var params = form.serializeJson();
+            var opt = {
+                callback: function (result) {
+                    $(".form-horizontal").clearForm();
+                    load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('[name="parent"]').val()});
+                }
+            };
+            ajax_action(/*[[@{/save}]]*/ "", params, opt);
+        }
+    };
+    var goBack = function () {
+        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('[name="parent"]').val()});
+    };
+    var sort = function () {
+        var params = '';
+        $(this).find('li').each(function (i) {
+            if (i !== 0) params += '#';
+            params += $(this).attr('id') + ',' + i;
+        });
+        ajax_action(/*[[@{/sort}]]*/ "", {sortable: params});
+    };
+    var load = function (number) {
+        var opt = {
+            waiting: false,
+            handler: function (result) {
+                $('[name="id"]').val(result.result.id);
+                $('#number').val(result.result.number);
+                $('#english').val(result.result.english);
+                $('#content').val(result.result.content);
+                $('#description').val(result.result.description);
+            }
+        };
+        ajax_action(/*[[@{/load}]]*/ "", {number: number}, opt);
+    };
+</script>
+</html>

@@ -18,6 +18,15 @@
             <artifactId>admin-model</artifactId>
             <version>${admin.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-cloud-base</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
     </dependencies>
 
 

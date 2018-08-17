@@ -1,0 +1,22 @@
+#spring setting
+spring:
+  application:
+    name: portal
+  profiles:
+    active: dev
+#common setting
+website:
+  # 网站支持
+  support:
+    welcome-file: /index
+#  session:
+#    exclude-path: /rest/**
+#    authentication: sso
+#    exclude-path: /index, /login
+#  security:
+#    open-ddoc: true
+#    ddos:
+#      access-control-allow-origin: www.zzl.com
+##    open-csrf: true
+#    csrf:
+#      verify-exclude-path: /index

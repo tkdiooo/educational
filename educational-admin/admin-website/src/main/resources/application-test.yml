@@ -1,0 +1,52 @@
+#server setting
+server:
+  port: 8081
+  context-path: /admin
+  tomcat:
+    # 解析含有中文名的文件的url
+    uri-encoding: utf-8
+    # 最大连接数
+    max-connections: 1000
+    # 最大线程数，即最大并发数。
+    max-threads: 500
+    # 最小备用线程数
+    min-spare-threads: 20
+    # 线程数达到maxThreads后，后续请求会被放入一个等待队列，acceptCount是这个队列的大小
+    accept-count: 100
+    # tomcat连接器
+    connector: org.apache.coyote.http11.Http11NioProtocol
+    # tomcat优化
+    optimize: true
+#  session:
+#    cookie:
+#      domain: www.zzl.com
+#      # 只能在服务端设置
+#      http-only: true
+#      # 只能在 HTTPS 连接中被传递
+##      secure: true
+#      max-age: 1800
+#      path: /
+#spring setting
+spring:
+  thymeleaf:
+      cache: false
+      suffix: .html
+  mvc:
+    # 指定静态资源处理路径
+    static-path-pattern: /static/**
+    view:
+      suffix: .html
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:10002/eureka/
+cache:
+  redis:
+    host: 172.16.225.98
+    port: 6379
+    password: redis123
+    pool:
+      max-active: 300
+      max-wait: 10000
+      max-idle: 100
+      min-idle: 50
