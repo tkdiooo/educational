@@ -1,12 +1,7 @@
 package com.zts.educational.admin.rpc;
 
-import com.sfsctech.core.base.constants.LabelConstants;
-import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.base.json.FastJson;
 import com.sfsctech.support.common.util.BeanUtil;
-import com.sfsctech.support.common.util.ListUtil;
-import com.sfsctech.support.common.util.ThrowableUtil;
 import com.zts.educational.admin.inf.SystemService;
 import com.zts.educational.admin.model.dto.SystemDto;
 import com.zts.educational.admin.service.rw.SystemRWService;
@@ -34,24 +29,7 @@ public class SystemProvider implements SystemService {
 
     @Override
     public RpcResult<SystemDto> getByCode(@RequestBody SystemDto model) {
-        RpcResult<SystemDto> result = new RpcResult<>();
-        try {
-            SystemDto dto = service.getByCode(model.getCode());
-            if (null == dto) {
-                result.setSuccess(false);
-                result.setStatus(RpcConstants.Status.Failure);
-                result.setMessage("系统编号：" + model.getCode() + "获取集合为空");
-                logger.warn(FastJson.toJSONString(result.getStatus()));
-                logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
-            }
-            result.setResult(dto);
-        } catch (Exception e) {
-            result.setSuccess(false);
-            result.setStatus(RpcConstants.Status.ServerError);
-            result.setMessage(ThrowableUtil.getRootMessage(e));
-            logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
-        }
-        return result;
+        return new RpcResult<>(new SystemDto());
     }
 
     @Override

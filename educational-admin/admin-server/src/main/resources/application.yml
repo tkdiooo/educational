@@ -3,4 +3,4 @@ spring:
   application:
     name: Admin-Server
   profiles:
-    active: dev
+    active: test

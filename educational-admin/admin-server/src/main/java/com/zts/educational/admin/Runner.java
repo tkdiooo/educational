@@ -1,7 +1,7 @@
 package com.zts.educational.admin;
 
 import com.sfsctech.cloud.client.starter.EnableCloudService;
-import com.sfsctech.starter.annotation.EnableMybatis;
+import com.sfsctech.data.mybatis.starter.EnableMybatis;
 import org.springframework.boot.SpringApplication;
 
 /**

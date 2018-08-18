@@ -20,7 +20,7 @@ server:
 spring:
   druid-datasource:
     master:
-      url: jdbc:mysql://localhost:3306/qi_base?useUnicode=true&characterEncoding=utf-8
+      url: jdbc:mysql://192.168.3.21:3306/qi_base?useUnicode=true&characterEncoding=utf-8
       username: root
       password: 123456
       driver-class-name: com.mysql.jdbc.Driver
@@ -56,7 +56,7 @@ eureka:
       defaultZone: http://localhost:10002/eureka/
 cache:
   redis:
-    host: 172.16.225.98
+    host: 192.168.3.21
     port: 6379
     password: redis123
     pool:
