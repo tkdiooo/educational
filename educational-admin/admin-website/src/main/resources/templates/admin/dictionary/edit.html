@@ -16,7 +16,7 @@
     <!-- left column -->
     <div class="col-md-9 left-column">
         <!-- general form elements -->
-        <div class="box box-primary">
+        <div class="box box-warning">
             <div class="box-header with-border">
                 <h3 class="box-title">基础信息</h3>
             </div>
@@ -54,7 +54,7 @@
                 <input type="hidden" name="parent" th:value="${parent} ?: '0000000000000000000000'"/>
                 <input type="hidden" name="id" th:value="${model} ? ${model.id}"/>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()" data-original-title="提交表单">提交</button>
+                    <button type="button" class="btn btn-success pull-right" onclick="editSubmit()" data-original-title="提交表单">提交</button>
                     <button type="button" class="btn btn-default pull-right" onclick="goBack()" data-original-title="取消返回">取消</button>
                 </div>
             </form>
@@ -62,11 +62,12 @@
     </div>
     <div class="col-md-3 right-column"></div>
 </section>
+<div th:include="common/layout :: validator"></div>
 <script th:inline="javascript">
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
-        load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('[name="parent"]').val()});
+        load_url(/*[[@{/dictionary/ordering}]]*/ "", $('.right-column'), {parent: $('[name="parent"]').val()});
         $('.form-horizontal').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
@@ -87,7 +88,7 @@
                         },
                         threshold: 5,
                         remote: {
-                            url: /*[[@{/exist}]]*/ "",
+                            url: /*[[@{/dictionary/exist}]]*/ "",
                             message: '字典编号已存在',//提示消息
                             delay: 1000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
                             data: function (validator) {
@@ -140,14 +141,14 @@
             var opt = {
                 callback: function (result) {
                     $(".form-horizontal").clearForm();
-                    load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('[name="parent"]').val()});
+                    load_url(/*[[@{/dictionary/ordering}]]*/ "", $('.right-column'), {parent: $('[name="parent"]').val()});
                 }
             };
-            ajax_action(/*[[@{/save}]]*/ "", params, opt);
+            ajax_action(/*[[@{/dictionary/save}]]*/ "", params, opt);
         }
     };
     var goBack = function () {
-        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('[name="parent"]').val()});
+        load_url(/*[[@{/dictionary/index}]]*/ "", $('.content-wrapper'), {parent: $('[name="parent"]').val()});
     };
     var sort = function () {
         var params = '';
@@ -155,7 +156,7 @@
             if (i !== 0) params += '#';
             params += $(this).attr('id') + ',' + i;
         });
-        ajax_action(/*[[@{/sort}]]*/ "", {sortable: params});
+        ajax_action(/*[[@{/dictionary/sort}]]*/ "", {sortable: params});
     };
     var load = function (number) {
         var opt = {
@@ -168,7 +169,7 @@
                 $('#description').val(result.result.description);
             }
         };
-        ajax_action(/*[[@{/load}]]*/ "", {number: number}, opt);
+        ajax_action(/*[[@{/dictionary/load}]]*/ "", {number: number}, opt);
     };
 </script>
 </html>

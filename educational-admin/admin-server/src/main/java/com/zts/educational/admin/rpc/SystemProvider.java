@@ -1,7 +1,11 @@
 package com.zts.educational.admin.rpc;
 
+import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
+import com.sfsctech.core.base.json.FastJson;
 import com.sfsctech.support.common.util.BeanUtil;
+import com.sfsctech.support.common.util.ListUtil;
 import com.zts.educational.admin.inf.SystemService;
 import com.zts.educational.admin.model.dto.SystemDto;
 import com.zts.educational.admin.service.rw.SystemRWService;
@@ -29,7 +33,7 @@ public class SystemProvider implements SystemService {
 
     @Override
     public RpcResult<SystemDto> getByCode(@RequestBody SystemDto model) {
-        return new RpcResult<>(new SystemDto());
+        return new RpcResult<>(service.getByCode(model.getCode()));
     }
 
     @Override

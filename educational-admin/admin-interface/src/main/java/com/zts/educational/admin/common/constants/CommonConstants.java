@@ -10,7 +10,10 @@ public class CommonConstants {
 
     public static final String ROOT_GUID = "0000000000000000000000";
 
-//    public static final String SYSTEM_CODE = "educational-admin";
-    public static final String SYSTEM_CODE = "basic";
+    public static final String ROOT_NAME = "Root";
+
+    public static final String ROOT_CLASS = "active";
+
+    public static final String SYSTEM_CODE = "educational.admin";
 
 }

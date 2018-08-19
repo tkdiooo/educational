@@ -35,7 +35,7 @@
 <div th:fragment="validator">
     <link th:href="@{/webjars/bootstrapValidator/0.5.2/dist/css/bootstrapValidator.min.css}" rel="stylesheet">
     <script th:src="@{/webjars/bootstrapValidator/0.5.2/dist/js/bootstrapValidator.min.js}"></script>
-    <script th:src="@{/webjars/bootstrapValidator/0.5.2/dist/js/language/zh_CN}"></script>
+    <script th:src="@{/webjars/bootstrapValidator/0.5.2/dist/js/language/zh_CN.js}"></script>
     <script th:src="@{/webjars/bootstrapValidator/0.5.2/dist/js/language/en_US.js}"></script>
 </div>
 <div th:fragment="datatables">
@@ -348,7 +348,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li th:class="${c.choose} ? 'active' : ''" th:each="c : ${var.child}">
-                        <a th:id="${c.guid}" th:href="'http://' + ${system.domain} + ${c.url} + '?ajaxTimeFresh=' + ${#calendars.createNow().getTimeInMillis()}" onclick="menuChange(this.id)" th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}" target="myFrame"></a>
+                        <a th:id="${c.guid}" style="cursor: pointer;" th:onclick="'menuChange(this.id, \'' + ${system.domain + system.url} + '\', \'' + ${c.url} + '\');'"  th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}"></a>
                     </li>
                 </ul>
             </li>

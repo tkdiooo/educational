@@ -1,49 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<script th:inline="javascript">
-    $(function () {
-        var opt = {
-            container: '#data_table',
-            order: [5, "asc"],
-            columns: [
-                {sClass: "text-left", sWidth: "12%", sScrollY: 40},
-                {sClass: "text-left", sWidth: "12%", orderable: false},
-                {sClass: "text-left", sWidth: "12%", orderable: false},
-                {sClass: "text-left", sWidth: "12%", orderable: false},
-                {sClass: "text-left", sWidth: "12%", orderable: false},
-                {sClass: "text-left", sWidth: "5%"},
-                {sClass: "text-left", sWidth: "5%", orderable: false},
-                {sClass: "text-left", visible: false},
-                {sClass: "text-left", sWidth: "25%", orderable: false}
-            ],
-            buttons: [
-                {
-                    id: 'add_btn',
-                    type: 'button',
-                    text: '新增',
-                    title: '新增字典信息',
-                    class: 'btn btn-primary',
-                    action: function () {
-                        load_url(/*[[@{/add}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
-                    }
-                }, {
-                    id: 'status_btn',
-                    type: 'select',
-                    text: '所有状态',
-                    title: '字典状态选择',
-                    class: 'btn btn-default',
-                    options: [[${options}]],
-                    action: function (data) {
-                        var val = $.fn.dataTable.util.escapeRegex(data);
-                        table.column(5).search(val ? '^' + val + '$' : '', true, false).draw();
-                    }
-                }
-            ]
-        };
-        //dt-buttons
-        var table = matchDomTable(opt, true);
-    })
-</script>
 <input type="hidden" id="parent" name="parent" th:value="${parent}"/>
 <!-- Content Wrapper. Contains page content -->
 <section class="content-header">
@@ -60,7 +16,7 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box box-primary">
+            <div class="box box-warning">
                 <div class="box-header" style="padding-bottom: 0 !important;padding-top: 0 !important;">
                     <ol class="breadcrumb" style="margin-bottom: 0 !important; background: transparent;">
                         <li name="breadcrumb" th:each="breadcrumb, stat : ${breadcrumbs}"
@@ -77,7 +33,6 @@
                             <th>字典内容</th>
                             <th>字典拼音</th>
                             <th>字典英文</th>
-                            <th>字典描述</th>
                             <th>排序</th>
                             <th>状态</th>
                             <th>状态</th>
@@ -90,7 +45,6 @@
                             <td th:text="${var.content}"></td>
                             <td th:text="${var.pinyin}"></td>
                             <td th:text="${var.english}"></td>
-                            <td th:text="${var.description}"></td>
                             <td th:text="${var.sort}"></td>
                             <td th:utext="${status.get(var.status)}"></td>
                             <td th:utext="${var.status}"></td>
@@ -123,41 +77,84 @@
         </div>
     </div>
 </section>
+<div th:include="common/layout :: datatables"></div>
 <script th:inline="javascript">
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
     });
 
+    $(function () {
+        let opt = {
+            container: '#data_table',
+            order: [5, "asc"],
+            columns: [
+                {sClass: "text-left", sWidth: "12%", sScrollY: 40},
+                {sClass: "text-left", sWidth: "12%", orderable: false},
+                {sClass: "text-left", sWidth: "12%", orderable: false},
+                {sClass: "text-left", sWidth: "12%", orderable: false},
+                {sClass: "text-left", sWidth: "5%"},
+                {sClass: "text-left", sWidth: "5%", orderable: false},
+                {sClass: "text-left", visible: false},
+                {sClass: "text-left", sWidth: "25%", orderable: false}
+            ],
+            buttons: [
+                {
+                    id: 'add_btn',
+                    type: 'button',
+                    text: '新增',
+                    title: '新增字典信息',
+                    class: 'btn btn-success',
+                    action: function () {
+                        load_url(/*[[@{/dictionary/add}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                    }
+                }, {
+                    id: 'status_btn',
+                    type: 'select',
+                    text: '所有状态',
+                    title: '字典状态选择',
+                    class: 'btn btn-default',
+                    options: [[${options}]],
+                    action: function (data) {
+                        var val = $.fn.dataTable.util.escapeRegex(data);
+                        table.column(6).search(val ? '^' + val + '$' : '', true, false).draw();
+                    }
+                }
+            ]
+        };
+        //dt-buttons
+        let table = matchDomTable(opt, true);
+    });
+
     function goBreadcrumb(bc) {
-        var params = {parent: $(bc).parent().attr('code')};
-        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), params);
+        let params = {parent: $(bc).parent().attr('code')};
+        load_url(/*[[@{/dictionary/index}]]*/ "", $('.content-wrapper'), params);
     }
 
     function edit(number) {
-        load_url(/*[[@{/edit}]]*/ "", $('.content-wrapper'), {number: number});
+        load_url(/*[[@{/dictionary/edit}]]*/ "", $('.content-wrapper'), {number: number});
     }
 
     function disable(number) {
-        var opt = {
+        let opt = {
             callback: function (result) {
-                load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                load_url(/*[[@{/dictionary/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
             }
         };
-        ajax_action(/*[[@{/disable}]]*/ "", {number: number}, opt);
+        ajax_action(/*[[@{/dictionary/disable}]]*/ "", {number: number}, opt);
     }
 
     function valid(number) {
-        var opt = {
+        let opt = {
             callback: function (result) {
-                load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                load_url(/*[[@{/dictionary/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
             }
         };
-        ajax_action(/*[[@{/valid}]]*/ "", {number: number}, opt);
+        ajax_action(/*[[@{/dictionary/valid}]]*/ "", {number: number}, opt);
     }
 
     function child(number) {
-        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: number});
+        load_url(/*[[@{/dictionary/index}]]*/ "", $('.content-wrapper'), {parent: number});
     }
 </script>
 </html>

@@ -456,6 +456,8 @@ function load_url(url, container, data, opt) {
                 }).html(data).delay(50).animate({
                     opacity: '1.0'
                 }, 300);
+                $data = $(data);
+                $data.find("script").appendTo(container);
             } else {
                 container.html(data);
             }
