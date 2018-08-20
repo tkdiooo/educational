@@ -498,7 +498,7 @@ function matchDomTable(opt, destorys) {
             $(opt.container).DataTable().destroy();
         }
     }
-    var defaults = {
+    let defaults = {
         scrollX: true,
         bSort: true,
         searching: true, //原生搜索
@@ -550,7 +550,7 @@ function matchDomTable(opt, destorys) {
         //     $('#data_table_paginate').find('li').find('a').attr('style', 'padding:4px 10px !important;');
         // }
     };
-    var settings = $.extend({}, defaults, opt);
+    let settings = $.extend({}, defaults, opt);
     //初始化表格
     return $(opt.container).DataTable(settings);
 }
@@ -664,31 +664,33 @@ function matchAjaxTable(opt, destorys) {
 }
 
 function matchTableButtons(opt) {
+    $("#toolbar").css({
+        "width": "100px",
+        "display": "inline",
+        "margin-left": "10px"
+    });
     $.each(opt.buttons, function (i, value) {
-        var div = $('<div class="btn-group" data-autorun="' + (i + 1) + '" data-original-title="' + value.title + '"></div>');
         // 按钮
         if (value.type === 'button') {
-            var button = $('<button type="button" id="' + value.id + '" class="' + value.class + '"><span class="glyphicon">' + value.text + '</span></button>');
-            button.click(value.action);
-            div.append(button);
+            // let button = $('<a id="' + value.id + '" href="javascript:void(0)" class="' + value.class + '" style="margin-right: 5px;">' + value.text + '</a>');
+            // button.click(value.action);
+            // $("#toolbar").append(button);
         }
         // 选择
         else if (value.type === 'select') {
-            var select = $('<button type="button" id="' + value.id + '" class="' + value.class + '" val="">' + value.text + '</button>' +
-                '<button type="button" class="' + value.class + ' dropdown-toggle" data-toggle="dropdown">' +
-                '<span class="caret"></span><span class="sr-only">' + value.text + '</span></button>');
-            var options = $('<ul class="dropdown-menu" role="menu"></ul>');
-            $.each(value.options, function (j, opt) {
-                var li = $('<li cls="' + opt.class + '" val="' + opt.value + '"><a href="javascript:void(0);">' + opt.text + '</a></li>');
-                li.click(function () {
-                    selectChange(this, value);
-                });
-                options.append(li);
-            });
-            div.append(select);
-            div.append(options);
+            // let select = $('<select id="' + value.id + '" class="' + value.class + '"></select>');
+            // select.append($('<option value="">' + value.text + '</option>'));
+            // $.each(value.options, function (j, opt) {
+            //     select.append($('<option value="' + opt.value + '">' + opt.text + '</option>'));
+            // });
+            // $("#toolbar").append(select);
+            // $('.selectpicker').selectpicker().on('changed.bs.select',function(e){
+            //     invoke(value.action, $(this).selectpicker('val'));
+            // });
+            // $('button[data-id="' + value.id + '"]').css({
+            //     'line-height': '1.131'
+            // })
         }
-        $("#toolbar").append(div);
     });
 }
 

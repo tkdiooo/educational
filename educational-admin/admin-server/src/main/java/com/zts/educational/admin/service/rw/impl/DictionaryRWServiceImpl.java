@@ -74,13 +74,17 @@ public class DictionaryRWServiceImpl implements DictionaryRWService {
     @Override
     public boolean numberIsExist(BaseDictionary dictionary) {
         BaseDictionaryExample example = new BaseDictionaryExample();
-        if (null != dictionary.getId()) {
-            BaseDictionary dict = mapper.selectByPrimaryKey(dictionary.getId());
-            if (dict.getNumber().equals(dictionary.getNumber())) {
-                return true;
-            }
+        BaseDictionaryExample.Criteria criteria = example.createCriteria();
+        if (CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
+            criteria.andNumberEqualTo(dictionary.getNumber());
+        } else {
+            criteria.andNumberEqualTo(dictionary.getParent() + dictionary.getNumber());
         }
-        example.createCriteria().andNumberEqualTo(dictionary.getParent().equals(CommonConstants.ROOT_GUID) ? dictionary.getNumber() : (dictionary.getParent() + dictionary.getNumber()));
-        return mapper.selectByExample(example).size() == 0;
+        if (null != dictionary.getId()) {
+            criteria.andIdEqualTo(dictionary.getId());
+            return mapper.selectByExample(example).size() == 1;
+        } else {
+            return mapper.selectByExample(example).size() == 0;
+        }
     }
 }

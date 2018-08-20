@@ -35,6 +35,13 @@
                     <div class="form-group col-xs-6">
                         <label for="content" class="col-sm-4 control-label">字典内容</label>
                         <div class="col-xs-7 input-group">
+                            <select class="selectpicker">
+                                <option value="1">广东省</option>
+                                <option value="2">广西省</option>
+                                <option value="3">福建省</option>
+                                <option value="4">湖南省</option>
+                                <option value="5">山东省</option>
+                            </select>
                             <input type="text" class="form-control" id="content" name="content" placeholder="请输入字典内容" th:value="${model} ? ${model.content}">
                         </div>
                     </div>
@@ -90,7 +97,7 @@
                         remote: {
                             url: /*[[@{/dictionary/exist}]]*/ "",
                             message: '字典编号已存在',//提示消息
-                            delay: 1000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                            delay: 1000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置1秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
                             data: function (validator) {
                                 return {
                                     id: $('[name="id"]').val(),
@@ -132,13 +139,16 @@
             }
         });
     });
-    var editSubmit = function () {
-        var form = $(".form-horizontal");
-        var formValid = form.data('bootstrapValidator');
+    function editSubmit() {
+        let form = $(".form-horizontal");
+        let formValid = form.data('bootstrapValidator');
+        if (formValid.validateField('number').isValid()) {
+            formValid.enableFieldValidators('number', false);
+        }
         formValid.validate();
         if (formValid.isValid()) {
-            var params = form.serializeJson();
-            var opt = {
+            let params = form.serializeJson();
+            let opt = {
                 callback: function (result) {
                     $(".form-horizontal").clearForm();
                     load_url(/*[[@{/dictionary/ordering}]]*/ "", $('.right-column'), {parent: $('[name="parent"]').val()});
@@ -146,20 +156,20 @@
             };
             ajax_action(/*[[@{/dictionary/save}]]*/ "", params, opt);
         }
-    };
-    var goBack = function () {
+    }
+    function goBack() {
         load_url(/*[[@{/dictionary/index}]]*/ "", $('.content-wrapper'), {parent: $('[name="parent"]').val()});
-    };
-    var sort = function () {
-        var params = '';
+    }
+    function sort() {
+        let params = '';
         $(this).find('li').each(function (i) {
             if (i !== 0) params += '#';
             params += $(this).attr('id') + ',' + i;
         });
         ajax_action(/*[[@{/dictionary/sort}]]*/ "", {sortable: params});
-    };
-    var load = function (number) {
-        var opt = {
+    }
+    function load(number) {
+        let opt = {
             waiting: false,
             handler: function (result) {
                 $('[name="id"]').val(result.result.id);
@@ -170,6 +180,6 @@
             }
         };
         ajax_action(/*[[@{/dictionary/load}]]*/ "", {number: number}, opt);
-    };
+    }
 </script>
 </html>

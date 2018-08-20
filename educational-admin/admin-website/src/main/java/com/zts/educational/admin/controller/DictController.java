@@ -61,7 +61,7 @@ public class DictController {
                 BaseDictionary dict = dictConsumer.getByNumber(dictionary.getParent());
                 Breadcrumb breadcrumb = new Breadcrumb(dict.getContent(), CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", dict.getNumber());
-                list = factory.getList(dict.getParent());
+                list = factory.getList(BaseDictionary.class.getSimpleName() + dict.getParent());
                 list.add(breadcrumb);
             }
             factory.getCacheClient().put(BaseDictionary.class.getSimpleName() + dictionary.getParent(), list);

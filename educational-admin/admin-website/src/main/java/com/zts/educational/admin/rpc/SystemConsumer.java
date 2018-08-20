@@ -74,9 +74,7 @@ public class SystemConsumer {
                 system = result.getResult();
                 factory.getCacheClient().putTimeOut(cache_key, system, CacheConstants.MilliSecond.Minutes30.getContent());
             } else {
-                BizException e = new BizException(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
-//                e.setViewName(CommonConstants.VIEW_404);
-                throw e;
+                throw new BizException(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             }
         }
         return system;
