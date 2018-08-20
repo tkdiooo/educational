@@ -30,10 +30,10 @@ public interface DictionaryService {
     RpcResult<DictionaryDto> save(@RequestBody DictionaryDto dictionary);
 
     @RequestMapping("changeStatus")
-    void changeStatus(@RequestBody DictionaryDto dictionary);
+    RpcResult changeStatus(@RequestBody DictionaryDto dictionary);
 
     @RequestMapping("sort")
-    void sort(@RequestBody DictionaryDto dictionary);
+    RpcResult sort(@RequestBody DictionaryDto dictionary);
 
     @RequestMapping("numberIsExist")
     RpcResult numberIsExist(@RequestBody DictionaryDto dictionary);

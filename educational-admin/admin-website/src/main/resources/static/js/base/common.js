@@ -540,10 +540,6 @@ function matchDomTable(opt, destorys) {
             if (settings.buttons) {
                 matchTableButtons(settings);
             }
-            // 表格加载完毕，表头宽度自适应
-            if (settings.autoColumnSizing) {
-                $(opt.container + '_wrapper').find('.dataTables_scrollHeadInner').addClass('fullWidth').find('.table-bordered').addClass('fullWidth');
-            }
         }
         // drawCallback: function (settings) {
         //     $('#data_table_wrapper').find('.row').attr('style', 'margin-left:0 !important;margin-right:0 !important;');
@@ -672,24 +668,24 @@ function matchTableButtons(opt) {
     $.each(opt.buttons, function (i, value) {
         // 按钮
         if (value.type === 'button') {
-            // let button = $('<a id="' + value.id + '" href="javascript:void(0)" class="' + value.class + '" style="margin-right: 5px;">' + value.text + '</a>');
-            // button.click(value.action);
-            // $("#toolbar").append(button);
+            let button = $('<a id="' + value.id + '" href="javascript:void(0)" class="' + value.class + '" style="margin-right: 5px;">' + value.text + '</a>');
+            button.click(value.action);
+            $("#toolbar").append(button);
         }
         // 选择
         else if (value.type === 'select') {
-            // let select = $('<select id="' + value.id + '" class="' + value.class + '"></select>');
-            // select.append($('<option value="">' + value.text + '</option>'));
-            // $.each(value.options, function (j, opt) {
-            //     select.append($('<option value="' + opt.value + '">' + opt.text + '</option>'));
-            // });
-            // $("#toolbar").append(select);
-            // $('.selectpicker').selectpicker().on('changed.bs.select',function(e){
-            //     invoke(value.action, $(this).selectpicker('val'));
-            // });
-            // $('button[data-id="' + value.id + '"]').css({
-            //     'line-height': '1.131'
-            // })
+            let select = $('<select id="' + value.id + '" class="' + value.class + '" style="width: 100%;"></select>');
+            select.append($('<option value="">' + value.text + '</option>'));
+            $.each(value.options, function (j, opt) {
+                select.append($('<option value="' + opt.value + '">' + opt.text + '</option>'));
+            });
+            $("#toolbar").append(select);
+            $('.selectpicker').selectpicker().on('changed.bs.select',function(e){
+                invoke(value.action, $(this).selectpicker('val'));
+            });
+            $('button[data-id="' + value.id + '"]').css({
+                'line-height': '1.131'
+            })
         }
     });
 }

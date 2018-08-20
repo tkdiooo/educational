@@ -52,6 +52,11 @@ public class DictionaryRWServiceImpl implements DictionaryRWService {
     public void changeStatus(BaseDictionary dictionary) {
         BaseDictionaryExample example = new BaseDictionaryExample();
         example.createCriteria().andNumberEqualTo(dictionary.getNumber());
+        dictionary.setPinyin(null);
+        dictionary.setEnglish(null);
+        dictionary.setContent(null);
+        dictionary.setDescription(null);
+        dictionary.setParent(null);
         mapper.updateByExampleSelective(dictionary, example);
     }
 

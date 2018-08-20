@@ -35,13 +35,6 @@
                     <div class="form-group col-xs-6">
                         <label for="content" class="col-sm-4 control-label">字典内容</label>
                         <div class="col-xs-7 input-group">
-                            <select class="selectpicker">
-                                <option value="1">广东省</option>
-                                <option value="2">广西省</option>
-                                <option value="3">福建省</option>
-                                <option value="4">湖南省</option>
-                                <option value="5">山东省</option>
-                            </select>
                             <input type="text" class="form-control" id="content" name="content" placeholder="请输入字典内容" th:value="${model} ? ${model.content}">
                         </div>
                     </div>
@@ -138,6 +131,12 @@
                 }
             }
         });
+        if($('#number').val() !== ''){
+            $(".form-horizontal").data('bootstrapValidator').enableFieldValidators('number', false);
+            $('#number').on("input",function(e){
+                $(".form-horizontal").data('bootstrapValidator').enableFieldValidators('number', true);
+            });
+        }
     });
     function editSubmit() {
         let form = $(".form-horizontal");

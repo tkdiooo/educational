@@ -29,13 +29,13 @@
                     <table id="data_table" class="table table-bordered table-striped" width="100%">
                         <thead>
                         <tr>
-                            <th>字典编号</th>
-                            <th>字典内容</th>
-                            <th>字典拼音</th>
-                            <th>字典英文</th>
-                            <th>排序</th>
-                            <th>状态</th>
-                            <th>状态</th>
+                            <th width="140px">字典编号</th>
+                            <th width="115px">字典内容</th>
+                            <th width="115px">字典拼音</th>
+                            <th width="115px">字典英文</th>
+                            <th width="140px">排序</th>
+                            <th width="115px">状态</th>
+                            <th hidden="hidden">状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -47,7 +47,7 @@
                             <td th:text="${var.english}"></td>
                             <td th:text="${var.sort}"></td>
                             <td th:utext="${status.get(var.status)}"></td>
-                            <td th:utext="${var.status}"></td>
+                            <td hidden="hidden" th:utext="${var.status}"></td>
                             <td>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
                                         th:onclick="'edit(\'' + ${var.number} + '\');'"
@@ -88,16 +88,16 @@
     $(function () {
         let opt = {
             container: '#data_table',
-            order: [5, "asc"],
+            order: [4, "asc"],
             columns: [
-                {sClass: "text-left", sWidth: "12%", sScrollY: 40},
-                {sClass: "text-left", sWidth: "12%", orderable: false},
-                {sClass: "text-left", sWidth: "12%", orderable: false},
-                {sClass: "text-left", sWidth: "12%", orderable: false},
-                {sClass: "text-left", sWidth: "5%"},
-                {sClass: "text-left", sWidth: "7%", orderable: false},
+                {sClass: "text-left", sWidth: "100px", sScrollY: 40},
+                {sClass: "text-left", sWidth: "100px", orderable: false},
+                {sClass: "text-left", sWidth: "100px", orderable: false},
+                {sClass: "text-left", sWidth: "100px", orderable: false},
+                {sClass: "text-left", sWidth: "100px"},
+                {sClass: "text-left", sWidth: "100px", orderable: false},
                 {sClass: "text-left", visible: false},
-                {sClass: "text-left", sWidth: "25%", orderable: false}
+                {sClass: "text-left", orderable: false}
             ],
             buttons: [
                 {
@@ -114,7 +114,7 @@
                     type: 'select',
                     text: '所有状态',
                     title: '字典状态选择',
-                    class: 'selectpicker',
+                    class: 'selectpicker col-1',
                     options: [[${options}]],
                     action: function (data) {
                         var val = $.fn.dataTable.util.escapeRegex(data);
@@ -125,6 +125,7 @@
         };
         //dt-buttons
         let table = matchDomTable(opt, true);
+        table.columns.adjust();
     });
 
     function goBreadcrumb(bc) {

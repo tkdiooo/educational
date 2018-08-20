@@ -95,13 +95,31 @@ public class DictionaryProvider implements DictionaryService {
     }
 
     @Override
-    public void changeStatus(@RequestBody DictionaryDto dictionary) {
-        service.changeStatus(dictionary);
+    public RpcResult changeStatus(@RequestBody DictionaryDto dictionary) {
+        RpcResult result = new RpcResult();
+        try {
+            service.changeStatus(dictionary);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setStatus(RpcConstants.Status.ServerError);
+            result.setMessage(ThrowableUtil.getRootMessage(e));
+            logger.warn(result.toString());
+        }
+        return result;
     }
 
     @Override
-    public void sort(@RequestBody DictionaryDto dto) {
-        transactionalService.sort(dto.getSortable());
+    public RpcResult sort(@RequestBody DictionaryDto dto) {
+        RpcResult result = new RpcResult();
+        try {
+            transactionalService.sort(dto.getSortable());
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setStatus(RpcConstants.Status.ServerError);
+            result.setMessage(ThrowableUtil.getRootMessage(e));
+            logger.warn(result.toString());
+        }
+        return result;
     }
 
     @Override
